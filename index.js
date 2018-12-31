@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     answer = answer.toLowerCase();
     if (questionCount === 0) {
       questionsButton.innerText = "No questions remaining. Game Over!";
-      debugger
+      debugger;
       playerEarningDisplay.innerText =
         "End of Game Total Earning: " + "$" + playerEarning;
       // answerStatus = false;
@@ -84,9 +84,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   hint_button.addEventListener("click", event => {
     event.preventDefault();
-    questionsButton.innerText = answer;
-    playerEarning -= 100;
-    playerEarningDisplay.innerText = "Total Earning: " + "$" + playerEarning;
+    if (questionCount !== 0) {
+      questionsButton.innerText = answer;
+      playerEarning -= 100;
+      playerEarningDisplay.innerText = "Total Earning: " + "$" + playerEarning;
+    }
   });
 
   // function checkAnswer() {}
