@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   let attemptCount = 3;
   let answer = "";
-  // let answerStatus = true;
-  // let gameNotEnded = true;
+  let gameEnded = false;
   let userInput;
   let playerEarning = 0;
   let questionValue = 0;
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let questionsCounter = document.querySelector(".questions_Counter");
   let playerEarningDisplay = document.querySelector(".player_earning");
   playerEarningDisplay.innerText = "Total Earning: " + "$" + playerEarning;
-  let questionCount = 5;
+  let questionCount = 3;
   let questions = document.createElement("p");
   let answers = document.createElement("p");
   let values = document.createElement("p");
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
   answers.classList.add("answers");
   values.classList.add("values");
   questionDiv.appendChild(questions);
-  // questionDiv.appendChild(questionsButton);
   questionDiv.appendChild(answers);
   questionDiv.appendChild(values);
 
@@ -40,43 +38,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   answerForm.addEventListener("submit", event => {
     event.preventDefault();
-    debugger;
     userInput = document.querySelector(".answerInput").value.toLowerCase();
     answer = answer.toLowerCase();
-    if (questionCount === 0) {
+    if (questionCount === 0 && gameEnded === true) {
       questionsButton.innerText = "No questions remaining. Game Over!";
-      debugger;
       playerEarningDisplay.innerText =
         "End of Game Total Earning: " + "$" + playerEarning;
-      // answerStatus = false;
       questionCount = 0;
       userInput = "gameover";
-      console.log(userInput);
-      debugger;
-    } else if (userInput === answer) {
+      gameEnded = true;
+    } else if (userInput === answer && gameEnded === false) {
+      debugger
       console.log("correct answer!");
       questionsButton.innerText = "Correct! Next Question";
-      // answerStatus = true;
       attemptCount = 3;
       playerEarning += questionValue;
       console.log(questionCount);
-      debugger;
-      // console.log(gameNotEnded)
       playerEarningDisplay.innerText = "Total Earning: " + "$" + playerEarning;
       fireRequest("http://jservice.io/api/clues", generateQuestion);
     } else if (attemptCount === 0) {
       questionsButton.innerText = "Too many wrong attempts. Game Over!";
       playerEarningDisplay.innerText =
         "End of Game Total Earning: " + "$" + playerEarning;
-      // answerStatus = false;
       questionCount = 0;
       userInput = "gameover";
       console.log(userInput);
-      debugger;
-      // gameNotEnded = false;
-    } else if (userInput !== answer) {
+      gameEnded = true;
+    } else if (userInput !== answer && gameEnded === false) {
       attemptCount -= 1;
-      // answerStatus = false;
       questionsButton.innerText =
         "Wrong! " + "Remaining attempt: " + attemptCount;
     }
@@ -91,8 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // function checkAnswer() {}
-
   function generateQuestion(questions) {
     questionsCounter.innerText = "Questions remaining:" + " " + questionCount;
     let questionData = questionBank(questions);
@@ -100,16 +87,23 @@ document.addEventListener("DOMContentLoaded", () => {
     questionData =
       questionData[Math.floor(Math.random() * questionData.length)];
     if (questionCount !== 0) {
+      questionsButton.innerText = "Click here to SKIP";
       questionCount -= 1;
       debugger;
       document.querySelector(".questions").innerText = questionData.question;
-      // document.querySelector(".answers").innerHTML = "Answer:" + " " + questionData.answer;
       document.querySelector(".values").innerText = "$" + questionData.value;
       questionValue = questionData.value;
       answer = questionData.answer;
       console.log(answer);
     } else if (questionCount === 0) {
-      answerStatus = false;
+      debugger
+      // gameEnded = true;
+      questionsButton.innerText = "No questions remaining AT ALL. Game Over!";
+      playerEarningDisplay.innerText =
+        "End of Game Total Earning: " + "$" + playerEarning;
+      questionCount = 0;
+      userInput = "gameover";
+      gameEnded = true;
     }
   }
 
