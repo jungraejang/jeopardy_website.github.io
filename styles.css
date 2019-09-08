@@ -13,17 +13,23 @@ p.answers {
 body {
   text-align: center;
   /* background-color:  #0038A8; */
-  background-image: linear-gradient(to right, #0038A8 , #D60270)
+  background-image: linear-gradient(to right, #0038A8, #D60270)
 }
 
 h1 {
-  color:#F5F5F5;
-  font-family: sans-serif;
+  color: #F5F5F5;
+  font-family: 'Cabin Sketch', cursive;
 }
 
 h2 {
   font-family: sans-serif;
+}
 
+input.submit_button {
+  margin-top: 20px;
+  width: 200px;
+  height: 200px;
+  font-size: 50px;
 }
 
 button {
@@ -31,10 +37,7 @@ button {
   font-size: 18px;
   width: 300px;
   height: 50px;
-  /* border-style: solid;
-  border-width: 3px;
-  border-color: black; */
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 form {
